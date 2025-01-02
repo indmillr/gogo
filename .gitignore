@@ -1,0 +1,49 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, created with `go test -c`
+*.test
+
+# Output of the `go run` command
+*.out
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Dependency directories (vendor/ is used in older versions of Go modules)
+vendor/
+
+# Go modules
+go.sum
+
+# Build artifacts
+bin/
+*.o
+*.a
+*.lo
+*.la
+
+# Logs
+*.log
+
+# Coverage files
+*.coverprofile
+*.cover.out
+
+# Profiling files
+*.pprof
+*.prof
+*.trace
+
+# Local configuration files
+.env
+
+# HTTP Testing
+test.http
