@@ -24,11 +24,12 @@ func (e Event) Save() error {
 	INSERT INTO events(name, description, location, dateTime, user_id)
 	VALUES (?, ?, ?, ?, ?)`
 	
+	// ----- Prepare is Optional. It is best used when a statement needs to be executed multiple times, but only if is has not been .Close() first
 	stmt, err := db.DB.Prepare(query)
 	if err != nil {
 		return err
 	}
-	
+
 	// --- defer Close of stmt to end of function
 	defer stmt.Close()
 
@@ -44,6 +45,28 @@ func (e Event) Save() error {
 }
 
 // ----- Get all available Events
-func GetAllEvents() []Event {
-	return events
+func GetAllEvents() ([]Event, error) {
+	query := "SELECT * FROM events"
+	// --- use Query instead of Exec. Commonly 'Query' is used when just fetching rows, 'Exec' is used when items are changing (INSERT)
+	rows, err := db.DB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var events []Event
+
+	// --- 'Next' returns True if there are rows left, False if not
+	for rows.Next() {
+		var event Event 
+		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
+		if err != nil {
+			return nil, err
+		}
+
+		events = append(events, event)
+	}
+
+	return events, nil
 }
