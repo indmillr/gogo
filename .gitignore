@@ -46,4 +46,4 @@ bin/
 .env
 
 # HTTP Testing
-test.http
+api-test/
