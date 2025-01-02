@@ -45,5 +45,6 @@ bin/
 # Local configuration files
 .env
 
-# HTTP Testing
+# Testing and Local
 api-test/
+api.db

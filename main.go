@@ -3,11 +3,15 @@ package main
 import (
 	"net/http"
 
+	"example.com/gogo/db"
 	"example.com/gogo/models"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	// --- establish DB connection
+	db.InitDB()
+
 	// --- Using Gin package for http server with Logger and Recovery middleware attached
 	server := gin.Default()
 
