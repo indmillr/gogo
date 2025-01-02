@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"example.com/gogo/models"
+	"example.com/gogo/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -33,8 +34,21 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
+	token := context.Request.Header.Get("Authorization")
+
+	if token == "" {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not Authorized."})
+		return
+	}
+
+	err := utils.VerifyToken(token)
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not Authorized."})
+		return
+	}
+
 	var event models.Event
-	err := context.ShouldBindJSON(&event)
+	err = context.ShouldBindJSON(&event)
 
 	// --- handle error
 	if err != nil {
@@ -42,7 +56,6 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	event.ID = 1
 	event.UserID = 1
 
 	event.Save()
