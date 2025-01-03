@@ -16,6 +16,8 @@ func RegisterRoutes(server *gin.Engine) {
 	authenticated.POST("/events", createEvent)
 	authenticated.PUT("/events/:id", updateEvent)
 	authenticated.DELETE("/events/:id", deleteEvent)
+	authenticated.POST("/events/:id/register", registerForEvent)
+	authenticated.DELETE("/events/:id/register")
 
 	// it is possible add items from middleware (auth) in line for the route one at a time, but Group is more efficient
 	// server.POST("/events", middlewares.Authenticate, createEvent)
